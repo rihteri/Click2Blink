@@ -8,9 +8,11 @@ package org.rihteri.clickblink;
  */
 public class BlinkEvent {
 	/**
-	 * Construct an empty blink event
+	 * Construct an empty blink event with a random color
 	 */
-	public BlinkEvent() { }
+	public BlinkEvent() {
+		setRandomColor();
+	}
 	
 	/**
 	 * Construct a blink event with random color on the given coordinates
@@ -21,9 +23,7 @@ public class BlinkEvent {
 		this.x = x;
 		this.y = y;
 		
-		this.red = getColor();
-		this.green = getColor();
-		this.blue = getColor();
+		setRandomColor();
 	}
 	
 	/**
@@ -32,9 +32,19 @@ public class BlinkEvent {
 	 */
 	public String getColorString() {
 		return "#"
-				+ Integer.toHexString(this.red)
-				+ Integer.toHexString(this.green)
-				+ Integer.toHexString(this.blue);
+				+ getColorStringPart(this.red)
+				+ getColorStringPart(this.green)
+				+ getColorStringPart(this.blue);
+	}
+	
+	private String getColorStringPart(int val) {
+		String ret = Integer.toHexString(val);
+		
+		if (ret.length() == 1) {
+			return "0" + ret;
+		} else {
+			return ret;
+		}
 	}
 	
 	/**
@@ -42,7 +52,7 @@ public class BlinkEvent {
 	 * @return
 	 */
 	private int getColor() {
-		return (int)(Math.random() * 255);
+		return (int)(Math.random() * 255.0);
 	}
 	
 	/**
@@ -60,6 +70,16 @@ public class BlinkEvent {
 	public double getY() {
 		return this.y;
 	}
+	
+	/**
+	 * Sets the color of this event randomly
+	 */
+	private void setRandomColor() {
+		this.red = getColor();
+		this.green = getColor();
+		this.blue = getColor();
+	}
+	
 	
 	private double x = 0.0;
 	private double y = 0.0;

@@ -38,6 +38,7 @@ dependencies {
 compileTypeScript {
     sourcemap = true
     out = file("${buildDir}/resources/main/public/runtime/app.js")
+    target = 'ES5'
 }
 
 eclipse {

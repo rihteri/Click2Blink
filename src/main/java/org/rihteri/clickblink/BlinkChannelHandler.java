@@ -8,13 +8,11 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import org.springframework.web.socket.server.standard.SpringConfigurator;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@ServerEndpoint(value = "/clicks", configurator = SpringConfigurator.class)
+@ServerEndpoint(value = "/clicks", encoders = { JsonEncoder.class })
 public class BlinkChannelHandler {
 	@OnOpen
     public void onOpen(Session session) throws IOException {
