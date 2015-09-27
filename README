@@ -1,0 +1,15 @@
+This is a silly collaborative clicking tool.
+
+The web page has a canvas. When you click on it, every visitor on the web page sees your click.
+
+To run on a real server, class BlinkWebsocketConfigurator must be modified to check the correct
+request origin.
+
+To build, 
+    gradle build
+    
+To run,
+    gradle run
+    
+    
+

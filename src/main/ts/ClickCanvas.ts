@@ -1,12 +1,23 @@
+/**
+ * Handles drawing circles on the screen to represent clicks
+ */
 class ClickCanvas {
     constructor(svgElem: HTMLCanvasElement) {
         this.canvas = svgElem;
-        this.canvas.width = this.canvas.clientWidth;
-        this.canvas.height = this.canvas.clientHeight;
+        
+        this.resizeCanvas();
+        window.onresize = (ev) => {
+            this.resizeCanvas();
+        }
         
         this.context = this.canvas.getContext("2d");
         
         this.canvas.onclick = this.onCanvasClick.bind(this);
+    }
+    
+    private resizeCanvas() {
+        this.canvas.width = this.canvas.clientWidth;
+        this.canvas.height = this.canvas.clientHeight;
     }
     
     /**
@@ -30,6 +41,9 @@ class ClickCanvas {
         }
     }
     
+    /**
+     * Clear out clicks which are now longer visible
+     */
     private removeStaleClicks() {
         var relevantClicks = new Array<ClickObject>();
         for (var i = 0; i < this.clicks.length; i++) {

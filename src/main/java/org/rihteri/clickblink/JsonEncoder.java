@@ -7,6 +7,11 @@ import javax.websocket.EndpointConfig;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Handles encoding arbitrary objects as JSON with the jackson JSON library
+ * @author rihteri
+ *
+ */
 public class JsonEncoder implements Encoder.Text<Object> {
 
 	@Override
@@ -19,6 +24,9 @@ public class JsonEncoder implements Encoder.Text<Object> {
 		
 	}
 
+	/***
+	 * Encodes a message as JSON
+	 */
 	@Override
 	public String encode(Object object) throws EncodeException {
 		try {

@@ -37,6 +37,11 @@ public class BlinkEvent {
 				+ getColorStringPart(this.blue);
 	}
 	
+	/**
+	 * Gets a hex string representing a single color in a HTML color string
+	 * @param val
+	 * @return
+	 */
 	private String getColorStringPart(int val) {
 		String ret = Integer.toHexString(val);
 		

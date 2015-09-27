@@ -8,6 +8,12 @@ import java.util.Set;
 import javax.websocket.EncodeException;
 import javax.websocket.Session;
 
+/**
+ * A silly class for handling message passing between servlets. In a
+ * real system, we would use a real message broker.
+ * @author rihteri
+ *
+ */
 public class BlinkBroker {	
 	/**
 	 * Add a new session to be messaged for
@@ -17,6 +23,10 @@ public class BlinkBroker {
 		sessions.add(sess);
 	}
 	
+	/**
+	 * Remove a session after the user left
+	 * @param sess
+	 */
 	public void deregisterSession(Session sess) {
 		sessions.remove(sess);
 	}

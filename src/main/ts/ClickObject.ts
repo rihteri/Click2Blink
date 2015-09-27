@@ -6,6 +6,9 @@ class ClickObject {
         this._clickEvent = ev;    
     }
     
+    /**
+     * Called on requestAnimationFrame callback from ClickCanvas
+     */
     public draw(
             ctx: CanvasRenderingContext2D,
             animTime: number,
