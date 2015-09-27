@@ -2,8 +2,8 @@ package org.rihteri.clickblink;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.websocket.EncodeException;
 import javax.websocket.Session;
@@ -17,10 +17,18 @@ import javax.websocket.Session;
 public class BlinkBroker {	
 	/**
 	 * Add a new session to be messaged for
-	 * @param sess
+	 * @param sess The session to register. After this, do not 
+	 *             send messages to the session from elsewhere
+	 * @throws IllegalStateException thrown if the session given has already
+	 * 								 been added
 	 */
-	public void registerSession(Session sess) {
-		sessions.add(sess);
+	public void registerSession(Session sess)
+			throws IllegalStateException {
+		if (sessions.containsKey(sess)) {
+			throw new IllegalStateException("Item already added");
+		}
+		
+		sessions.put(sess, new SafeSession(sess));
 	}
 	
 	/**
@@ -36,9 +44,9 @@ public class BlinkBroker {
 	 * @param ev
 	 */
 	public void sendBlink(BlinkEvent ev) {
-		for (Session s : sessions) {
+		for (SafeSession s : sessions.values()) {
 			try {
-				s.getBasicRemote().sendObject(ev);
+				s.sendObject(ev);
 			} catch (IOException e) {
 				// other side disconnected
 				sessions.remove(s);
@@ -50,7 +58,7 @@ public class BlinkBroker {
 	}
 	
 	/**
-	 * Gets the shared instance
+	 * Gets the singleton instance
 	 * @return
 	 */
 	public static BlinkBroker getBroker() {
@@ -59,6 +67,6 @@ public class BlinkBroker {
 	
 	private static final BlinkBroker broker = new BlinkBroker();
 	
-	private Set<Session> sessions 
-		= Collections.synchronizedSet(new HashSet<Session>());
+	private Map<Session, SafeSession> sessions 
+		= Collections.synchronizedMap(new HashMap<Session, SafeSession>());
 }
