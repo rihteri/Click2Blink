@@ -21,4 +21,9 @@ public class EndpointConfig {
     public ServerEndpointExporter endpointExporter() {
         return new ServerEndpointExporter();
     } 
+    
+    @Bean
+    public OriginConfig originConfig() {
+    	return new OriginConfig();
+    }
 }
